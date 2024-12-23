@@ -9,7 +9,8 @@ public class HomePage {
     WebDriver driver;
 
     By searchBar = By.id("twotabsearchtextbox");
-    By navBar = By.id("nav-bar");
+    By navBar = By.id("navbar-main");
+    By pageContent = By.id("pageContent");
     By suggestionList = By.id("sac-autocomplete-results-container");
     By departmentDropdown = By.id("searchDropdownDescription");
 
@@ -18,26 +19,65 @@ public class HomePage {
     }
 
     public WebElement getSearchBar() {
-        return driver.findElement(searchBar);
+        try {
+            return driver.findElement(searchBar);
+        } catch (Exception e) {
+            System.out.println("Erro genérico ao tentar acessar o elemento: " + e.getMessage());
+            throw e;
+        }
     }
 
-    public WebElement getnavBar() {
-        return driver.findElement(navBar);
+    public WebElement getNavBar() {
+        try {
+            return driver.findElement(navBar);
+        } catch (Exception e) {
+            System.out.println("Erro genérico ao tentar acessar o elemento: " + e.getMessage());
+            throw e;
+        }
+    }
+
+    public WebElement getPageContent() {
+        try {
+            return driver.findElement(pageContent);
+        } catch (Exception e) {
+            System.out.println("Erro genérico ao tentar acessar o elemento: " + e.getMessage());
+            throw e;
+        }
     }
 
     public WebElement getSuggestionList() {
-        return driver.findElement(suggestionList);
+        try {
+            return driver.findElement(suggestionList);
+        } catch (Exception e) {
+            System.out.println("Erro genérico ao tentar acessar o elemento: " + e.getMessage());
+            throw e;
+        }
     }
 
     public WebElement getDepartmentDropdown() {
-        return driver.findElement(departmentDropdown);
+        try {
+            return driver.findElement(departmentDropdown);
+        } catch (Exception e) {
+            System.out.println("Erro genérico ao tentar acessar o elemento: " + e.getMessage());
+            throw e;
+        }
     }
 
     public void searchFor(String query) {
-        getSearchBar().sendKeys(query);
+        try {
+            getSearchBar().sendKeys(query);
+        } catch (Exception e) {
+            System.out.println("Erro genérico ao tentar acessar o elemento: " + e.getMessage());
+            throw e;
+        }
     }
 
     public void selectDepartment(String department) {
-        getDepartmentDropdown().sendKeys(department);
+        try {
+            getDepartmentDropdown().sendKeys(department);
+        } catch (Exception e) {
+            System.out.println("Erro genérico ao tentar acessar o elemento: " + e.getMessage());
+            throw e;
+        }
     }
 }
