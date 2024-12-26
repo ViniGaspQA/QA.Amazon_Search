@@ -106,5 +106,7 @@ public class MenuPage {
         driver.findElement(searchText).clear();
         driver.findElement(searchText).sendKeys(search);
         driver.findElement(navBar).submit();
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(navBar));
     } 
 }

@@ -26,6 +26,10 @@ public class MenuTest {
         driverFactory.openBaseUrl();  
         menuPage = new MenuPage(driver);
         homePage = new HomePage(driver);
+
+        if(homePage.getScrenCaptcha()){
+            driverFactory.refreshPage();            
+        }
     }
 
     @Test
@@ -34,7 +38,7 @@ public class MenuTest {
     public void healthCheckMenu() {
         try {
             assertNotNull(driver, "O WebDriver não foi inicializado corretamente");
-            assertDoesNotThrow(() -> driver.get("https://www.amazon.com.br/"), "Não foi possível acessar a página inicial");
+            assertDoesNotThrow(() -> driver.get(driverFactory.BASE_URL), "Não foi possível acessar a página inicial");
             assertTrue(homePage.getSearchBar().isDisplayed(), "A barra de pesquisa não está visível");
             assertTrue(homePage.getNavBar().isDisplayed(), "O menu principal não está visível");
         } catch (AssertionError | Exception e) {

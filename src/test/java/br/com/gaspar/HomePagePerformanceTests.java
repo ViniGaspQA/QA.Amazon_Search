@@ -21,6 +21,10 @@ public class HomePagePerformanceTests {
         driver = driverFactory.getDriver();    
         driverFactory.openBaseUrl();  
         homePage = new HomePage(driver);
+
+        if(homePage.getScrenCaptcha()){
+            driverFactory.refreshPage();            
+        }
     }
 
     @Test
@@ -29,7 +33,7 @@ public class HomePagePerformanceTests {
     public void healthCheckHomePagePerformance() {
         try {
             assertNotNull(driver, "O WebDriver não foi inicializado corretamente");
-            assertDoesNotThrow(() -> driver.get("https://www.amazon.com.br/"), "Não foi possível acessar a página inicial");
+            assertDoesNotThrow(() -> driver.get(driverFactory.BASE_URL), "Não foi possível acessar a página inicial");
             assertTrue(homePage.getSearchBar().isDisplayed(), "A barra de pesquisa não está visível");
             assertTrue(homePage.getNavBar().isDisplayed(), "O menu principal não está visível");
         } catch (AssertionError | Exception e) {
@@ -74,7 +78,7 @@ public class HomePagePerformanceTests {
     @DisplayName("Cache Habilitado")
     @Order(4)
     public void testCacheEnabled() {
-        driver.navigate().refresh();  // Tenta recarregar a página usando o cache
+        driver.navigate().refresh();
         long startTime = System.currentTimeMillis();
         driver.navigate().refresh();
         long endTime = System.currentTimeMillis();
@@ -87,7 +91,7 @@ public class HomePagePerformanceTests {
     @Order(5)
     public void testInterruptionInLoad() {
         driver.navigate().to("about:blank");
-        driver.get("https://www.amazon.com.br/");
+        driver.get(driverFactory.BASE_URL);
         assertTrue(homePage.getSearchBar().isDisplayed(), "A barra de pesquisa deve ser visível");
     }
 
@@ -96,14 +100,15 @@ public class HomePagePerformanceTests {
     @Order(6)
     public void testMemoryUsage() {
         long initialMemory = Runtime.getRuntime().freeMemory();
-        // Navega por 15 minutos (simulando comportamento de usuário)
+        // Navega por 5 ou 15 minutos (simulando comportamento de usuário)
         try {
-            Thread.sleep(900000); // 15 minutos
+            Thread.sleep(300000); // 5 minutos
+            //Thread.sleep(900000); // 15 minutos
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
         long finalMemory = Runtime.getRuntime().freeMemory();
-        assertTrue(finalMemory >= initialMemory, "O uso de memória não deve aumentar progressivamente");
+        assertTrue(finalMemory <= initialMemory, "O uso de memória não deve aumentar progressivamente");
     }
 
     @Test

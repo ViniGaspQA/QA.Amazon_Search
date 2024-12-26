@@ -13,6 +13,7 @@ public class HomePage {
     By pageContent = By.id("pageContent");
     By suggestionList = By.id("sac-autocomplete-results-container");
     By departmentDropdown = By.id("searchDropdownDescription");
+    By screnCaptcha = By.cssSelector("body > div > div.a-row.a-spacing-double-large > div.a-section > div > div");
 
     public HomePage(WebDriver driver) {
         this.driver = driver;
@@ -51,6 +52,18 @@ public class HomePage {
         } catch (Exception e) {
             System.out.println("Erro genérico ao tentar acessar o elemento: " + e.getMessage());
             throw e;
+        }
+    }
+
+    public boolean getScrenCaptcha() {
+        try {
+            if(driver.findElement(screnCaptcha).isDisplayed()){                   
+                return true;        
+            }else{
+                return false;
+            }            
+        } catch (Exception e) {
+            return false;
         }
     }
 

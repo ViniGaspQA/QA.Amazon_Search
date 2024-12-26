@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 public class DriverFactory {
     private WebDriver driver;
     private static final String CHROME_DRIVER_PATH = "E:\\Projetos\\amazon\\chromedriver.exe";
-    private static final String BASE_URL = "https://www.amazon.com.br/";
+    public String BASE_URL = "https://www.amazon.com.br/";
 
     // Método para inicializar o WebDriver
     public WebDriver getDriver() {        
@@ -65,6 +65,18 @@ public class DriverFactory {
         }
     }
 
+    //Método para atualizar tela com captura de exceção
+    public void refreshPage() {        
+        try {
+            openBaseUrl();
+        } catch (WebDriverException e) {
+            System.err.println("Erro ao tentar atualizar a página.");
+            e.printStackTrace();  
+        } catch (Exception e) {
+            System.err.println("Erro inesperado ao tentar atualizar a página.");
+            e.printStackTrace();  
+        }
+    }
     // Método para fechar o WebDriver
     public void quitDriver() {
         try {
